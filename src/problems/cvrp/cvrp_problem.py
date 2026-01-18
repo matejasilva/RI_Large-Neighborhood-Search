@@ -1,5 +1,6 @@
 from src.lns.basic_lns import BasicLNS
 from src.lns.adaptive_lns import AdaptiveLNS
+from src.enums import LNSMethod
 
 class CVRPProblem:
     def __init__(self, nodes, demands, number_of_vehicles, depot=0):
@@ -11,11 +12,11 @@ class CVRPProblem:
     def initial_solution(self):
         pass
 
-    def solve(self, initial, algorithm='basic', **kwargs):
+    def solve(self, initial, algorithm=LNSMethod.BASIC, **kwargs):
 
-        if algorithm == 'basic':
+        if algorithm == LNSMethod.BASIC:
             lns = BasicLNS(**kwargs)
-        elif algorithm == 'adaptive':
+        elif algorithm == LNSMethod.ADAPTIVE:
             lns = AdaptiveLNS(**kwargs)
         else:
             raise ValueError(f"Nepoznat algoritam: {algorithm}")
