@@ -4,6 +4,11 @@
 
 Ovaj projekat implementira i poredi metaheuristike Large Neighborhood Search (LNS) i Adaptive Large Neighborhood Search (ALNS) u Pythonu.
 
+## Ulazni podaci
+
+Link ka stranici sa instancama:  
+[CVRP](https://galgos.inf.puc-rio.br/cvrplib/index.php/en/instances)
+
 ## Struktura projekta
 
 ```
