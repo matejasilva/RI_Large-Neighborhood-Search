@@ -18,8 +18,12 @@ class CVRPSolution:
         total_cost = 0.0
 
         for route in self.routes:
+            if not route:
+                continue
+            total_cost += self.distance(self.problem.depot, route[0])
             for i in range(len(route) - 1):
                 total_cost += self.distance(route[i], route[i + 1])
+            total_cost += self.distance(route[-1], self.problem.depot)
 
         return int(round(total_cost))
     
@@ -32,7 +36,7 @@ class CVRPSolution:
     def __str__(self):
         s = ""
         for i, r in enumerate(self.routes, 1):
-            customers = [n for n in r if n != self.problem.depot]
+            customers = [n for n in r]
             s += f"Route #{i}: {' '.join(map(str, customers))}\n"
         s += f"Cost {self.cost}"
         return s

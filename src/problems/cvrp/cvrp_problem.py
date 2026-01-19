@@ -17,7 +17,7 @@ class CVRPProblem:
         vehicle_loads = []
 
         for _ in range(self.number_of_vehicles):
-            routes.append([self.depot])
+            routes.append([])
             vehicle_loads.append(0)
 
         vehicle_id = 0
@@ -28,7 +28,6 @@ class CVRPProblem:
             demand = self.demands[customer]
 
             if vehicle_loads[vehicle_id] + demand > self.capacity:
-                routes[vehicle_id].append(self.depot)
                 vehicle_id += 1
 
                 if vehicle_id >= self.number_of_vehicles:
@@ -37,10 +36,6 @@ class CVRPProblem:
             routes[vehicle_id].append(customer)
             vehicle_loads[vehicle_id] += demand
 
-        routes[vehicle_id].append(self.depot)
-
-        for i in range(vehicle_id + 1, self.number_of_vehicles):
-            routes[i].append(self.depot)
 
         return CVRPSolution(routes, self)
 
