@@ -1,5 +1,6 @@
 import math
 from copy import deepcopy
+import matplotlib.pyplot as plt
 
 class CVRPSolution:
     def __init__(self, routes, problem):
@@ -40,3 +41,39 @@ class CVRPSolution:
             s += f"Route #{i}: {' '.join(map(str, customers))}\n"
         s += f"Cost {self.cost}"
         return s
+    
+    def plot(self):
+        problem = self.problem
+        depot = problem.depot
+        coords = problem.nodes
+
+        plt.figure(figsize=(10, 10))
+
+        depot_x, depot_y = coords[depot]
+        plt.scatter(depot_x, depot_y, marker="s", s=120)
+        plt.text(depot_x, depot_y, "Depot", fontsize=10, ha="right")
+
+        colors = plt.cm.get_cmap("tab10", len(self.routes))
+
+        for r_id, route in enumerate(self.routes):
+            if not route:
+                continue
+
+            x = [depot_x]
+            y = [depot_y]
+
+            for c in route:
+                cx, cy = coords[c]
+                x.append(cx)
+                y.append(cy)
+                plt.text(cx, cy, str(c), fontsize=9, ha="right")
+
+            x.append(depot_x)
+            y.append(depot_y)
+
+            plt.plot(x, y, marker="o", color=colors(r_id), label=f"Route {r_id}")
+
+        plt.title(f"CVRP solution | cost = {self.cost}")
+        plt.legend()
+        plt.axis("equal")
+        plt.show()

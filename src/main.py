@@ -32,6 +32,7 @@ def main():
 
     print("Best solution found:")
     print(best_solution)
+    best_solution.plot()
 
 if __name__ == "__main__":
     main()
