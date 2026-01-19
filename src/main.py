@@ -4,8 +4,12 @@ from utils.helpers import parse_cvrp_problem
 from problems.cvrp.cvrp_problem import CVRPProblem
 from problems.cvrp.cvrp_solution import CVRPSolution
 
+from lns.basic_lns import BasicLNS
+
 from destroy.random_destroy import RandomDestroy
 from repair.greedy_repair import GreedyRepair
+
+from accept.simulated_annealing_accept import SimulatedAnnealingAccept
 
 def main():
 
@@ -13,27 +17,21 @@ def main():
     cvrp_problem = parse_cvrp_problem(problem)
 
     problem = CVRPProblem(
-        cvrp_problem.nodes, cvrp_problem.demands, 
-        cvrp_problem.number_of_vehicles, 
-        cvrp_problem.capacity, cvrp_problem.depot)
-    
-    solution = problem.initial_solution()
+        cvrp_problem.nodes,
+        cvrp_problem.demands,
+        cvrp_problem.number_of_vehicles,
+        cvrp_problem.capacity,
+        cvrp_problem.depot
+    )
 
-    print(solution)
-    print("**********************************")
+    lns = BasicLNS(SimulatedAnnealingAccept(), 
+                RandomDestroy(),
+                GreedyRepair())
 
-    destroy = RandomDestroy()
-    partial = destroy(solution.copy())
+    best_solution = lns.run(problem.initial_solution(), 1000)
 
-    print(partial)
-    print(partial.removed_customers)
-    print("************************************")
-
-    repair = GreedyRepair()
-    repaired = repair(partial.copy())
-    print(repaired)
-
-
+    print("Best solution found:")
+    print(best_solution)
 
 if __name__ == "__main__":
     main()
