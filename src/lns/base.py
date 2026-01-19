@@ -17,10 +17,10 @@ class BaseLNS(ABC):
         best = current.copy()
 
         for _ in range(max_iterations):
-            partial = self.destroy(current)
+            partial = self.destroy(current.copy())
             candidate = self.repair(partial)
             
-            if self.accept(current, candidate):
+            if self.accept(candidate, current):
                 current = candidate
                 if candidate.cost < best.cost:
                     best = candidate

@@ -5,9 +5,9 @@ def parse_cvrp_problem(problem):
 
     capacity = problem.capacity
     number_of_vehicles = extract_number_of_vehicles(problem.comment)
-    nodes = list(problem.node_coords.values())
-    demands = list(problem.demands.values())
-    depot = problem.depots[0] - 1
+    nodes = dict(problem.node_coords)
+    demands = dict(problem.demands)
+    depot = problem.depots[0]
 
     return CVRPProblem(nodes, demands, number_of_vehicles, capacity, depot)
 

@@ -1,2 +1,10 @@
 venv
+moj_venv
+.env
+
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+.vscode

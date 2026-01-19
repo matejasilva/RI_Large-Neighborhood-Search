@@ -1,0 +1,36 @@
+import math
+from copy import deepcopy
+
+class CVRPSolution:
+    def __init__(self, routes, problem):
+        self.routes = routes
+        self.problem = problem
+        self.cost = self.evaluate()
+
+    def copy(self):
+        new_routes = [route[:] for route in self.routes]
+        s = CVRPSolution(new_routes, self.problem)
+        return s
+    
+    def evaluate(self):
+        total_cost = 0.0
+
+        for route in self.routes:
+            for i in range(len(route) - 1):
+                total_cost += self.distance(route[i], route[i + 1])
+
+        return int(round(total_cost))
+    
+    def distance(self, i, j):
+        xi, yi = self.problem.nodes[i]
+        xj, yj = self.problem.nodes[j]
+
+        return math.hypot(xi - xj, yi - yj)
+    
+    def __str__(self):
+        s = ""
+        for i, r in enumerate(self.routes, 1):
+            customers = [n for n in r if n != self.problem.depot]
+            s += f"Route #{i}: {' '.join(map(str, customers))}\n"
+        s += f"Cost {self.cost}"
+        return s
