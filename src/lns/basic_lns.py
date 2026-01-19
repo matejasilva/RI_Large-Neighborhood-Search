@@ -5,3 +5,9 @@ class BasicLNS(BaseLNS):
         super().__init__(accept)
         self.destroy = destroy
         self.repair = repair
+
+    def destroy(self, current):
+        return self._destroy(current)
+    
+    def repair(self, partial):
+        return self._repair(partial)

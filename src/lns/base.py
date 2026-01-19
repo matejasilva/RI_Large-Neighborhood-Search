@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from destroy.random_destroy import RandomDestroy
+
 class BaseLNS(ABC):
     def __init__(self, accept):
         self.accept = accept

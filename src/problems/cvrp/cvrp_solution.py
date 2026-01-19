@@ -5,11 +5,13 @@ class CVRPSolution:
     def __init__(self, routes, problem):
         self.routes = routes
         self.problem = problem
+        self.removed_customers = []
         self.cost = self.evaluate()
 
     def copy(self):
         new_routes = [route[:] for route in self.routes]
         s = CVRPSolution(new_routes, self.problem)
+        s.removed_customers = self.removed_customers[:]
         return s
     
     def evaluate(self):
