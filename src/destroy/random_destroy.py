@@ -1,5 +1,5 @@
 import random
-from utils.destroy import prepare_destroy
+from utils.destroy import prepare_destroy, get_new_routes
 
 class RandomDestroy:
     def __init__(self, min_frac = 0.05, max_frac = 0.1):
@@ -12,9 +12,7 @@ class RandomDestroy:
 
         removed = set(random.sample(customers, q))
 
-        new_routes = []
-        for route in solution.routes:
-            new_routes.append([c for c in route if c not in removed])
+        new_routes = get_new_routes(solution.routes, removed)
 
         solution.routes = new_routes
         solution.removed_customers = list(removed)
