@@ -1,5 +1,5 @@
 import random
-import math
+from utils.destroy import prepare_destroy
 
 class RandomDestroy:
     def __init__(self, min_frac = 0.05, max_frac = 0.1):
@@ -8,17 +8,7 @@ class RandomDestroy:
 
     def __call__(self, solution):
         
-        problem = solution.problem
-        depot = problem.depot
-
-        customers = [c for route in solution.routes
-                     for c in route
-                     if c != depot]
-        
-        if not customers:
-            return solution
-        
-        q = math.ceil(random.uniform(self.min_frac, self.max_frac) * len(customers))
+        _, customers, q = prepare_destroy(solution, self.min_frac, self.max_frac)
 
         removed = set(random.sample(customers, q))
 

@@ -1,5 +1,5 @@
 import tsplib95
-from utils.helpers import parse_cvrp_problem
+from utils.parser import parse_cvrp_problem
 
 from problems.cvrp.cvrp_problem import CVRPProblem
 from problems.cvrp.cvrp_solution import CVRPSolution

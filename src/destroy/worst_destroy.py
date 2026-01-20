@@ -1,5 +1,5 @@
 import random
-import math
+from utils.destroy import prepare_destroy
 
 class WorstDestroy:
     def __init__(self, min_frac = 0.05, max_frac = 0.1, randomize = True):
@@ -9,15 +9,8 @@ class WorstDestroy:
 
     def __call__(self, solution):
         
-        problem = solution.problem
-        depot = problem.depot
-
-        customers = []
-        for route in solution.routes:
-            customers.extend(route)
-
-        q = math.ceil(random.uniform(self.min_frac, self.max_frac) * len(customers))
-
+        depot, _, q = prepare_destroy(solution, self.min_frac, self.max_frac)
+        
         cost_decreases = []
 
         for route in solution.routes:
