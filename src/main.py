@@ -7,6 +7,8 @@ from problems.cvrp.cvrp_solution import CVRPSolution
 from lns.basic_lns import BasicLNS
 
 from destroy.random_destroy import RandomDestroy
+from destroy.worst_destroy import WorstDestroy
+
 from repair.greedy_repair import GreedyRepair
 
 from accept.simulated_annealing_accept import SimulatedAnnealingAccept
@@ -25,14 +27,14 @@ def main():
     )
 
     lns = BasicLNS(SimulatedAnnealingAccept(), 
-                RandomDestroy(),
+                WorstDestroy(),
                 GreedyRepair())
+    for _ in range(25):
+        best_solution = lns.run(problem.initial_solution(), 1000)
 
-    best_solution = lns.run(problem.initial_solution(), 1000)
-
-    print("Best solution found:")
-    print(best_solution)
-    best_solution.plot()
+        print("Best solution found:")
+        print(best_solution)
+        # best_solution.plot()
 
 if __name__ == "__main__":
     main()
