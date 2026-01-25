@@ -40,16 +40,16 @@ class CVRPProblem:
         return CVRPSolution(routes, self)
 
 
-    def solve(self, initial, algorithm=LNSMethod.BASIC, **kwargs):
+    def solve(self, algorithm=LNSMethod.BASIC, **kwargs):
 
         if algorithm == LNSMethod.BASIC:
-            lns = BasicLNS(**kwargs)
+            lns = BasicLNS(kwargs['accept'], kwargs['destroy'], kwargs['repair'])
         elif algorithm == LNSMethod.ADAPTIVE:
             lns = AdaptiveLNS(**kwargs)
         else:
             raise ValueError(f"Nepoznat algoritam: {algorithm}")
 
-        return lns.run(initial)
+        return lns.run(self.initial_solution(), kwargs.get('max_iterations', 100))
     
     def __str__(self):  
         return (f"CVRP Problem with {len(self.nodes)} nodes, "

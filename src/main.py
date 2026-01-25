@@ -11,14 +11,17 @@ from destroy.worst_destroy import WorstDestroy
 from destroy.related_destroy import RelatedDestroy
 
 from repair.greedy_repair import GreedyRepair
+from repair.regret_repair import RegretRepair
 
 from accept.simulated_annealing_accept import SimulatedAnnealingAccept
+from enums import LNSMethod
 
 def main():
 
-    problem = tsplib95.load("instances/cvrp/Set A/examples/A-n32-k5.vrp")
+    problem = tsplib95.load("instances/cvrp/Set A/examples/A-n36-k5.vrp")
     cvrp_problem = parse_cvrp_problem(problem)
-
+    print("Problem loaded.")
+    print(cvrp_problem)
     problem = CVRPProblem(
         cvrp_problem.nodes,
         cvrp_problem.demands,
@@ -27,15 +30,16 @@ def main():
         cvrp_problem.depot
     )
 
-    lns = BasicLNS(SimulatedAnnealingAccept(), 
-                RelatedDestroy(min_frac=0.1, max_frac=0.2, randomize=True),
-                GreedyRepair())
     
-    best_solution = lns.run(problem.initial_solution(), 10000)
+    best_solution = problem.solve(algorithm=LNSMethod.BASIC,
+                                accept=SimulatedAnnealingAccept(),
+                                destroy=RelatedDestroy(min_frac=0.05, max_frac=0.1, randomize=True),
+                                repair=RegretRepair(),
+                                max_iterations=20000)
 
     print("Best solution found:")
     print(best_solution)
-    # best_solution.plot()
+    best_solution.plot()
 
 if __name__ == "__main__":
     main()
