@@ -7,6 +7,7 @@ from problems.cvrp.cvrp_solution import CVRPSolution
 from destroy.random_destroy import RandomDestroy
 from destroy.worst_destroy import WorstDestroy
 from destroy.related_destroy import RelatedDestroy
+from destroy.worst_route_destroy import WorstRouteDestroy
 
 from repair.greedy_repair import GreedyRepair
 from repair.regret_repair import RegretRepair
@@ -31,7 +32,7 @@ def main():
     for _ in range(10):
         best_solution = problem.solve(algorithm=LNSMethod.BASIC,
                                     accept=SimulatedAnnealingAccept(),
-                                    destroy=RelatedDestroy(min_frac=0.05, max_frac=0.1, randomize=True),
+                                    destroy=WorstRouteDestroy(),
                                     repair=RegretRepair(),
                                     max_iterations=1000)
 
