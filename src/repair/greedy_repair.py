@@ -24,7 +24,12 @@ class GreedyRepair:
                     best = (delta, customer, route_id, pos)
 
             if best is None:
-                raise ValueError("Kupac ne moze biti ubacen")
+                if not hasattr(solution, 'previous_solution') or solution.previous_solution is None:
+                    raise ValueError("Nije moguc rollback.")
+                solution.routes = solution.previous_solution
+                solution.removed_customers = []
+                solution.cost = solution.evaluate()
+                return solution                
             
             _, best_customer, best_route_id, best_position = best
             solution.routes[best_route_id].insert(best_position, best_customer)

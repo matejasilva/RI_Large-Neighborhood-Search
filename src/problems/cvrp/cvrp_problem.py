@@ -1,3 +1,4 @@
+import random
 from lns.basic_lns import BasicLNS
 from lns.adaptive_lns import AdaptiveLNS
 from enums import LNSMethod
@@ -12,33 +13,38 @@ class CVRPProblem:
         self.capacity = capacity
         self.depot = depot
 
-    def initial_solution(self):
-        routes = []
-        vehicle_loads = []
+    def initial_solution(self, max_attempts=20):
+        for _ in range(max_attempts):
+            routes = []
+            vehicle_loads = []
 
-        for _ in range(self.number_of_vehicles):
-            routes.append([])
-            vehicle_loads.append(0)
+            for _ in range(self.number_of_vehicles):
+                routes.append([])
+                vehicle_loads.append(0)
 
-        vehicle_id = 0
+            vehicle_id = 0
 
-        customers = [i for i in self.demands.keys() if i != self.depot]
+            customers = [i for i in self.demands.keys() if i != self.depot]
+            random.shuffle(customers)
+            
+            try:
+                for customer in customers:
+                    demand = self.demands[customer]
 
-        for customer in customers:
-            demand = self.demands[customer]
+                    if vehicle_loads[vehicle_id] + demand > self.capacity:
+                        vehicle_id += 1
 
-            if vehicle_loads[vehicle_id] + demand > self.capacity:
-                vehicle_id += 1
+                        if vehicle_id >= self.number_of_vehicles:
+                            raise ValueError("Nema dovoljno vozila!")
+                        
+                    routes[vehicle_id].append(customer)
+                    vehicle_loads[vehicle_id] += demand
 
-                if vehicle_id >= self.number_of_vehicles:
-                    raise ValueError("Nema dovoljno vozila!")
-                
-            routes[vehicle_id].append(customer)
-            vehicle_loads[vehicle_id] += demand
+                return CVRPSolution(routes, self)
+            except ValueError:
+                continue
 
-
-        return CVRPSolution(routes, self)
-
+        raise ValueError("Neuspelo generisanje pocetnog resenja nakon vise pokusaja.")
 
     def solve(self, algorithm=LNSMethod.BASIC, **kwargs):
 

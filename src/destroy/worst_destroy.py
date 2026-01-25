@@ -40,6 +40,7 @@ class WorstDestroy:
 
         new_routes = get_new_routes(solution.routes, removed)
 
+        solution.previous_solution = solution.routes
         solution.routes = new_routes
         solution.removed_customers = removed
 
