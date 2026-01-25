@@ -18,7 +18,7 @@ from enums import LNSMethod
 
 def main():
 
-    problem = tsplib95.load("instances/cvrp/Set A/examples/A-n36-k5.vrp")
+    problem = tsplib95.load("instances/cvrp/Set A/examples/A-n33-k6.vrp")
     cvrp_problem = parse_cvrp_problem(problem)
     print("Problem loaded.")
     print(cvrp_problem)
@@ -29,15 +29,14 @@ def main():
         cvrp_problem.capacity,
         cvrp_problem.depot
     )
-
     
     best_solution = problem.solve(algorithm=LNSMethod.BASIC,
                                 accept=SimulatedAnnealingAccept(),
                                 destroy=RelatedDestroy(min_frac=0.05, max_frac=0.1, randomize=True),
                                 repair=RegretRepair(),
-                                max_iterations=20000)
+                                max_iterations=1000)
 
-    print("Best solution found:")
+    print("Solution found:")
     print(best_solution)
     best_solution.plot()
 

@@ -1,7 +1,6 @@
 import re
 from problems.cvrp.cvrp_problem import CVRPProblem
-import random
-import math
+
 
 def parse_cvrp_problem(problem):
 

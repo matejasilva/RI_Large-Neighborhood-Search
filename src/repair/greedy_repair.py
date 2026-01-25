@@ -1,4 +1,4 @@
-import math
+from utils.repair import get_insert_positions
 
 class GreedyRepair:
 
@@ -6,51 +6,27 @@ class GreedyRepair:
         pass
 
     def __call__(self, solution):
-        problem = solution.problem
-        depot = problem.depot
-
-        if not hasattr(solution, "removed_customers"):
-            return solution
 
         removed = solution.removed_customers.copy()
 
         while removed:
-            best_cost = float("inf")
-            best_customer = None
-            best_route_id = None
-            best_position = None
+            best = None
 
             for customer in removed:
-                demand = problem.demands[customer]
+                insertion_costs = get_insert_positions(solution, customer)
 
-                for r_id, route in enumerate(solution.routes):
-                    route_demand = sum(problem.demands[c] for c in route if c != depot)
-                    if route_demand + demand > problem.capacity:
-                        continue
-                    
-                    extended_route = [depot] + route + [depot]
+                if not insertion_costs:
+                    continue
 
-                    for pos in range(1, len(extended_route)):
-                        prev_node = extended_route[pos - 1]
-                        next_node = extended_route[pos]
+                delta, route_id, pos = min(insertion_costs, key=lambda x: x[0])
 
-                        delta = (
-                            solution.distance(prev_node, customer)
-                            + solution.distance(customer, next_node)
-                            - solution.distance(prev_node, next_node)
-                        )
+                if best is None or delta < best[0]:
+                    best = (delta, customer, route_id, pos)
 
-                        real_pos = pos - 1
-
-                        if delta < best_cost:
-                            best_cost = delta
-                            best_customer = customer
-                            best_route_id = r_id
-                            best_position = real_pos
-
-            if best_customer is None:
+            if best is None:
                 raise ValueError("Kupac ne moze biti ubacen")
             
+            _, best_customer, best_route_id, best_position = best
             solution.routes[best_route_id].insert(best_position, best_customer)
             removed.remove(best_customer)
 
