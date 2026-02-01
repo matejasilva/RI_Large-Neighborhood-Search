@@ -51,7 +51,11 @@ class CVRPProblem:
         if algorithm == LNSMethod.BASIC:
             lns = BasicLNS(kwargs['accept'], kwargs['destroy'], kwargs['repair'])
         elif algorithm == LNSMethod.ADAPTIVE:
-            lns = AdaptiveLNS(**kwargs)
+            lns = AdaptiveLNS(accept=kwargs['accept'],
+            destroy_methods=kwargs['destroy_methods'],
+            repair_methods=kwargs['repair_methods'],
+            reaction_factor=kwargs.get('reaction_factor', 0.2),
+            scores=kwargs.get('scores', (5, 3, 1, 0)))
         else:
             raise ValueError(f"Nepoznat algoritam: {algorithm}")
 

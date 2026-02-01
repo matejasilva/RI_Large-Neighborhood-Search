@@ -29,16 +29,38 @@ def main():
         cvrp_problem.depot
     )
 
-    for _ in range(10):
-        best_solution = problem.solve(algorithm=LNSMethod.BASIC,
-                                    accept=SimulatedAnnealingAccept(),
-                                    destroy=WorstRouteDestroy(),
-                                    repair=RegretRepair(),
-                                    max_iterations=1000)
+    # for _ in range(10):
+    #     best_solution = problem.solve(algorithm=LNSMethod.BASIC,
+    #                                 accept=SimulatedAnnealingAccept(),
+    #                                 destroy=RandomDestroy(),
+    #                                 repair=RegretRepair(),
+    #                                 max_iterations=10000)
 
-        print("Solution found:")
-        print(best_solution)
-        best_solution.plot()
+
+    # print("Solution found:")
+    # print(best_solution)
+    # best_solution.plot()
+
+    best_solution = problem.solve(
+    algorithm=LNSMethod.ADAPTIVE,
+    accept=SimulatedAnnealingAccept(),
+    destroy_methods=[
+        RandomDestroy(),
+        WorstDestroy(),
+        RelatedDestroy(),
+        WorstRouteDestroy()
+    ],
+    repair_methods=[
+        GreedyRepair(),
+        RegretRepair()
+    ],
+    max_iterations=100000
+)
+    
+    print("Solution found:")
+    print(best_solution)
+    best_solution.plot()
+    
 
 if __name__ == "__main__":
     main()
