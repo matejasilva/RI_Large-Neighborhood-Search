@@ -6,43 +6,34 @@ from enums import LNSMethod
 from .cvrp_solution import CVRPSolution
 
 class CVRPProblem:
-    def __init__(self, nodes, demands, number_of_vehicles, capacity, depot=0):
+    def __init__(self, nodes, demands, capacity, depot=0):
         self.nodes = nodes
         self.demands = demands
-        self.number_of_vehicles = number_of_vehicles
         self.capacity = capacity
         self.depot = depot
 
     def initial_solution(self, max_attempts=20):
         for _ in range(max_attempts):
-            routes = []
-            vehicle_loads = []
-
-            for _ in range(self.number_of_vehicles):
-                routes.append([])
-                vehicle_loads.append(0)
-
+            routes = [[]]
+            vehicle_loads = [0]
             vehicle_id = 0
 
             customers = [i for i in self.demands.keys() if i != self.depot]
             random.shuffle(customers)
             
-            try:
-                for customer in customers:
-                    demand = self.demands[customer]
+            for customer in customers:
+                demand = self.demands[customer]
 
-                    if vehicle_loads[vehicle_id] + demand > self.capacity:
-                        vehicle_id += 1
+                if vehicle_loads[vehicle_id] + demand > self.capacity:
+                    vehicle_id += 1
+                    routes.append([])
+                    vehicle_loads.append(0)
+                    
+                routes[vehicle_id].append(customer)
+                vehicle_loads[vehicle_id] += demand
 
-                        if vehicle_id >= self.number_of_vehicles:
-                            raise ValueError("Nema dovoljno vozila!")
-                        
-                    routes[vehicle_id].append(customer)
-                    vehicle_loads[vehicle_id] += demand
-
-                return CVRPSolution(routes, self)
-            except ValueError:
-                continue
+            return CVRPSolution(routes, self)
+            
 
         raise ValueError("Neuspelo generisanje pocetnog resenja nakon vise pokusaja.")
 
@@ -63,7 +54,6 @@ class CVRPProblem:
     
     def __str__(self):  
         return (f"CVRP Problem with {len(self.nodes)} nodes, "
-                f"{self.number_of_vehicles} vehicles, "
                 f"capacity {self.capacity}, depot at {self.depot}")
     
     

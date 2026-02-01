@@ -28,12 +28,11 @@ class RegretRepair:
                     best = (regret, customer, route_id1, position1)
 
             if best is None:
-                if not hasattr(solution, 'previous_solution') or solution.previous_solution is None:
-                    raise ValueError("Nije moguc rollback.")
-                solution.routes = solution.previous_solution
-                solution.removed_customers = []
+                customer = removed[0]
+                solution.routes.append([customer])
+                removed.remove(customer)
                 solution.cost = solution.evaluate()
-                return solution    
+                continue   
             
             _, best_customer, best_route_id, best_position = best
             solution.routes[best_route_id].insert(best_position, best_customer)

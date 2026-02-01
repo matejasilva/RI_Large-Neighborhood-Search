@@ -8,7 +8,6 @@ class CVRPSolution:
         self.problem = problem
         self.removed_customers = []
         self.cost = self.evaluate()
-        self.previous_solution = routes
 
     def copy(self):
         new_routes = [route[:] for route in self.routes]
