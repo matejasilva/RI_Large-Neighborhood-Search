@@ -11,10 +11,11 @@ class RegretRepair:
 
         while removed:
             best = None
+
             for customer in removed:
                 insertion_costs = get_insert_positions(solution, customer)
 
-                if len(insertion_costs) == 0:
+                if not insertion_costs:
                     continue
 
                 insertion_costs.sort(key=lambda x: x[0])
