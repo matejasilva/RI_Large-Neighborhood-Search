@@ -1,4 +1,5 @@
 import tsplib95
+import os
 from destroy.random_destroy import RandomDestroy
 from destroy.worst_destroy import WorstDestroy
 from destroy.related_destroy import RelatedDestroy
@@ -33,7 +34,7 @@ class Solver:
 
     def load_problem(self):
         problem = tsplib95.load(self.filepath)
-        return parse_cvrp_problem(problem)
+        return parse_cvrp_problem(problem, os.path.basename(self.filepath))
     
     def extract_selected_methods(self):
         destroy_instances = []

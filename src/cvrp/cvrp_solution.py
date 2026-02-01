@@ -47,7 +47,8 @@ class CVRPSolution:
         depot = problem.depot
         coords = problem.nodes
 
-        plt.figure(figsize=(10, 10))
+        fig = plt.figure(figsize=(10, 10))
+        fig.canvas.manager.set_window_title(f'CVRP Solution Visualization - {problem.filename}' if problem.filename else "CVRP Solution Visualization")
 
         depot_x, depot_y = coords[depot]
         plt.scatter(depot_x, depot_y, marker="s", s=120)
@@ -71,9 +72,9 @@ class CVRPSolution:
             x.append(depot_x)
             y.append(depot_y)
 
-            plt.plot(x, y, marker="o", color=colors(r_id), label=f"Route {r_id}")
+            plt.plot(x, y, marker="o", color=colors(r_id), label=f"Route {r_id+1}")
 
-        plt.title(f"CVRP solution | cost = {self.cost}")
+        plt.title(f"CVRP solution | cost = {self.cost} | number of routes = {len(self.routes)}")
         plt.legend()
         plt.axis("equal")
         plt.show()

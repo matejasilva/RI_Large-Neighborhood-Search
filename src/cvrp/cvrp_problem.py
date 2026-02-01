@@ -6,12 +6,13 @@ from enums import LNSMethod
 from .cvrp_solution import CVRPSolution
 
 class CVRPProblem:
-    def __init__(self, nodes, demands, capacity, depot=0):
+    def __init__(self, nodes, demands, capacity, depot=0, filename=None):
         self.nodes = nodes
         self.demands = demands
         self.capacity = capacity
         self.depot = depot
-
+        self.filename = filename
+        
     def initial_solution(self, max_attempts=20):
         for _ in range(max_attempts):
             routes = [[]]
