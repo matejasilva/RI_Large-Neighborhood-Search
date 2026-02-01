@@ -31,6 +31,7 @@ class WorstRouteDestroy:
         idx = int((r ** D) * len(routes_costs))
 
         worst_route = routes_costs[idx][0]
+        q= min(q, len(worst_route))
         removed = random.sample(worst_route, q)
 
         new_routes = get_new_routes(solution.routes, removed)

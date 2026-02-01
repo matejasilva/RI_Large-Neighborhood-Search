@@ -49,7 +49,7 @@ class CVRPProblem:
     def solve(self, algorithm=LNSMethod.BASIC, **kwargs):
 
         if algorithm == LNSMethod.BASIC:
-            lns = BasicLNS(kwargs['accept'], kwargs['destroy'], kwargs['repair'])
+            lns = BasicLNS(kwargs['accept'], kwargs['destroy_methods'][0], kwargs['repair_methods'][0])
         elif algorithm == LNSMethod.ADAPTIVE:
             lns = AdaptiveLNS(accept=kwargs['accept'],
             destroy_methods=kwargs['destroy_methods'],
