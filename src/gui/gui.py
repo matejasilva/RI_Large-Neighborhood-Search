@@ -21,7 +21,8 @@ class LnsApp:
     def load_file(self):
         file_path = filedialog.askopenfilename(
             title = "Selektuj CVRP fajl",
-            filetypes = [("VRP files", "*.vrp")]
+            filetypes = [("VRP files", "*.vrp")],
+            initialdir = "./instances"
         )
         if file_path:
             self.filepath_var.set(os.path.basename(file_path))

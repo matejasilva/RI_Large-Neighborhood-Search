@@ -7,8 +7,6 @@ from repair.greedy_repair import GreedyRepair
 from repair.regret_repair import RegretRepair
 from accept.simulated_annealing_accept import SimulatedAnnealingAccept
 from enums import LNSMethod, DestroyMethod, RepairMethod
-from lns.basic_lns import BasicLNS
-from lns.adaptive_lns import AdaptiveLNS
 from utils.parser import parse_cvrp_problem
 
 DESTROY_DICT = {
