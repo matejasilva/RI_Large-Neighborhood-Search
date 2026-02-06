@@ -12,9 +12,11 @@ class BasicLNS(BaseLNS):
     def repair(self, partial):
         return self._repair(partial)
     
-    def run(self, initial, max_iterations=100):
+    def run(self, initial, max_iterations=100, return_history = False):
         current = initial.copy()
         best = current.copy()
+
+        history = []
 
         for _ in range(max_iterations):
             partial = self.destroy(current.copy())
@@ -24,5 +26,10 @@ class BasicLNS(BaseLNS):
                 current = candidate
                 if candidate.cost < best.cost:
                     best = candidate
+
+            history.append(best.cost)
+
+        if return_history:
+            return best, history
 
         return best

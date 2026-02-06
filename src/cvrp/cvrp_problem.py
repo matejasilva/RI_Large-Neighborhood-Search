@@ -51,7 +51,7 @@ class CVRPProblem:
         else:
             raise ValueError(f"Nepoznat algoritam: {algorithm}")
 
-        return lns.run(self.initial_solution(), kwargs.get('max_iterations', 100))
+        return lns.run(self.initial_solution(), kwargs.get('max_iterations', 100),return_history=kwargs.get('return_history', False))
     
     def __str__(self):  
         return (f"CVRP Problem with {len(self.nodes)} nodes, "

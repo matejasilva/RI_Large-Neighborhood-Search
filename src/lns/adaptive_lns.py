@@ -39,9 +39,11 @@ class AdaptiveLNS(BaseLNS):
 
         self.repair_weights[r] = ((1 - f) * self.repair_weights[r] + f * score)
 
-    def run(self, initial, max_iterations=100):
+    def run(self, initial, max_iterations=100, return_history = False):
         current = initial.copy()
         best = current.copy()
+
+        history = []
 
         for _ in range(max_iterations):
 
@@ -72,5 +74,9 @@ class AdaptiveLNS(BaseLNS):
                 score = self.scores[3]   # ω4
 
             self.update_weights(score)
+            history.append(best.cost)
 
+        if return_history:
+            return best, history
+            
         return best
