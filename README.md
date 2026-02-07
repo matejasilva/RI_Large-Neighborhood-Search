@@ -41,10 +41,10 @@ Capacitated Vehicle Routing Problem (CVRP):
 │   ├── repair/        # Repair operatori
 │   ├── accept/        # Accept funkcija
 │   ├── gui/           # Grafički interfejs
-│   ├── analytics/     # Analiza rezultata
 │   └── main.py        # Pokretanje aplikacije
+├── analytics/         # Analiza rezultata
 ├── instances/         # CVRP test instance
-├── dokumentacija TODO
+├── Dokumentacija_Projekta.txt
 ├── requirements.txt
 └── README.md
 ```
@@ -81,7 +81,7 @@ python src/main.py
 Ili koristite analytics notebook za testiranje i analizu:
 
 ```bash
-jupyter notebook src/analytics/analytics.ipynb
+jupyter notebook analytics/analytics.ipynb
 ```
 
 ## Test instance
@@ -94,7 +94,7 @@ Projekat koristi Set A instance iz CVRP biblioteke:
 ## Rezultati
 
 Detaljni rezultati testiranja na Set A instancama, analiza performansi i poređenje Basic i Adaptive LNS algoritama dostupni su u:
-- `src/analytics/analytics.ipynb` - eksperimentalna analiza i grafici
+- `analytics/analytics.ipynb` - eksperimentalna analiza i grafici
 - `Dokumentacija_Projekta.txt` - zaključci i preporuke
 
 ## Dokumentacija
