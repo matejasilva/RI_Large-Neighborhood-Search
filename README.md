@@ -1,25 +1,51 @@
-# Large Neighborhood Search
+# Large Neighborhood Search za CVRP
 
-## Pregled
+## O projektu
 
-Ovaj projekat implementira i poredi metaheuristike Large Neighborhood Search (LNS) i Adaptive Large Neighborhood Search (ALNS) u Pythonu.
+Ovaj projekat implementira i poredi Basic LNS i Adaptive LNS metaheuristike za rešavanje Capacitated Vehicle Routing Problem (CVRP). CVRP je problem određivanja optimalnih ruta za vozila koja dostavljaju robu korisnicima, uz ograničenje kapaciteta vozila.
 
-## Ulazni podaci
+## Problem
 
-Link ka stranici sa instancama:  
-[CVRP](https://galgos.inf.puc-rio.br/cvrplib/index.php/en/instances)
+Capacitated Vehicle Routing Problem (CVRP):
+- Imamo skladište (depot) i skup korisnika sa potražnjama
+- Vozila imaju ograničen kapacitet
+- Cilj: minimizovati ukupnu pređenu udaljenost svih vozila
+
+## Funkcionalnosti
+
+**Implementirani algoritmi:**
+- Basic LNS - koristi fiksnu kombinaciju destroy/repair operatora
+- Adaptive LNS - dinamički bira najbolje operatore tokom izvršavanja
+
+**Destroy metode:**
+- Random Destroy - nasumično uklanjanje korisnika
+- Worst Destroy - uklanjanje najskupljih korisnika
+- Related Destroy - uklanjanje sličnih korisnika
+- Worst Route Destroy - uklanjanje dela najgore rute
+
+**Repair metode:**
+- Greedy Repair - ubacivanje korisnika na najjeftiniju poziciju
+- Regret Repair - prioritet korisnicima sa najvećim "žaljenjem"
+
+**Accept funkcija:**
+- Simulated Annealing - prihvata i lošija rešenja kako bi izbegao lokalne optimume
 
 ## Struktura projekta
 
 ```
 .
 ├── src/
-│ └── lns/
-│ ├── base.py # Apstraktna klasa za LNS
-│ ├── basic_lns.py # Implementacija Basic LNS
-│ └── adaptive_lns.py # Implementacija Adaptive LNS
+│   ├── cvrp/          # CVRP problem i rešenje
+│   ├── lns/           # Basic i Adaptive LNS
+│   ├── destroy/       # Destroy operatori
+│   ├── repair/        # Repair operatori
+│   ├── accept/        # Accept funkcija
+│   ├── gui/           # Grafički interfejs
+│   ├── analytics/     # Analiza rezultata
+│   └── main.py        # Pokretanje aplikacije
+├── instances/         # CVRP test instance
+├── dokumentacija TODO
 ├── requirements.txt
-├── .gitignore
 └── README.md
 ```
 
@@ -38,6 +64,59 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## Pokretanje
+
+Pokrenite GUI aplikaciju:
+
+```bash
+./run.sh
+```
+
+ili direktno:
+
+```bash
+python src/main.py
+```
+
+Ili koristite analytics notebook za testiranje i analizu:
+
+```bash
+jupyter notebook src/analytics/analytics.ipynb
+```
+
+## Test instance
+
+Projekat koristi Set A instance iz CVRP biblioteke:
+- Instance variraju od 32 do 80 čvorova
+- Svaka instanca ima poznato optimalno rešenje
+- Link: [CVRPLIB](https://galgos.inf.puc-rio.br/cvrplib/index.php/en/instances)
+
+## Rezultati
+
+Detaljni rezultati testiranja na Set A instancama, analiza performansi i poređenje Basic i Adaptive LNS algoritama dostupni su u:
+- `src/analytics/analytics.ipynb` - eksperimentalna analiza i grafici
+- `Dokumentacija_Projekta.txt` - zaključci i preporuke
+
+## Dokumentacija
+
+TODO
+
+## Zavisnosti
+
+- Python 3.10+
+- numpy
+- matplotlib
+- pandas
+- tsplib95
+
+## Reference
+
+Projekat je zasnovan na radu:
+- Shaw, P. (1998) - LNS pristup
+- Pisinger & Røpke (2007) - Adaptive LNS
+- CVRPLIB benchmark instance
+
+Detaljan spisak referenci dostupan u dokumentaciji.
 
 ## Autori
 
