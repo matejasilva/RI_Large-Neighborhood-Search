@@ -43,8 +43,8 @@ Capacitated Vehicle Routing Problem (CVRP):
 │   ├── gui/           # Grafički interfejs
 │   └── main.py        # Pokretanje aplikacije
 ├── analytics/         # Analiza rezultata
+├── documentation/     # PDF i LaTeX dokumentacija
 ├── instances/         # CVRP test instance
-├── Dokumentacija_Projekta.txt
 ├── requirements.txt
 └── README.md
 ```
@@ -95,11 +95,19 @@ Projekat koristi Set A instance iz CVRP biblioteke:
 
 Detaljni rezultati testiranja na Set A instancama, analiza performansi i poređenje Basic i Adaptive LNS algoritama dostupni su u:
 - `analytics/analytics.ipynb` - eksperimentalna analiza i grafici
-- `Dokumentacija_Projekta.txt` - zaključci i preporuke
+- `documentation/` - kompletna dokumentacija sa zaključcima
 
 ## Dokumentacija
 
-TODO
+Kompletna dokumentacija projekta dostupna je u PDF formatu:
+- `documentation/LargeNeighborhoodSearchZaCapacitatedVehicleRoutingProblem.pdf`
+
+Dokumentacija sadrži:
+- Teorijske osnove LNS algoritma
+- Detaljno objašnjenje CVRP problema
+- Opis svih implementiranih metoda
+- Eksperimentalnu analizu i rezultate
+- Reference i literaturu
 
 ## Zavisnosti
 
@@ -116,10 +124,8 @@ Projekat je zasnovan na radu:
 - Pisinger & Røpke (2007) - Adaptive LNS
 - CVRPLIB benchmark instance
 
-Detaljan spisak referenci dostupan u dokumentaciji.
-
 ## Autori
 
-Matija Stanković
+Matija Stanković 207/2021
 
-Mateja Milošević
+Mateja Milošević 31/2021
